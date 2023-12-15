@@ -1,0 +1,19 @@
+# Apache Playbook
+# Installs Apache2 on target1, enables UFW, and allows SSH (22) and HTTP (80)
+
+- name: Install Apache2 on target1
+  hosts: target1
+  remote_user: remoteadmin
+  tasks:
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: present
+
+    - name: Enable UFW and allow SSH and HTTP
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+      loop:
+        - 22
+        - 80
