@@ -1,0 +1,19 @@
+# MySQL Playbook
+# Installs MySQL on target2, enables UFW, and allows SSH (22) and MySQL (3306)
+
+- name: Install MySQL on target2
+  hosts: target2
+  remote_user: remoteadmin
+  tasks:
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Enable UFW and allow SSH and MySQL
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+      loop:
+        - 22
+        - 3306
